@@ -1,5 +1,5 @@
 # Profile Github
-Meu perfil do **Github** feito com o **AJAX** em JavaScript
+Meu perfil do **Github** feito com o **AJAX** em JavaScript/TypeScript
 
 ## Linguagens usadas:
 <img src="https://skillicons.dev/icons?i=ts">

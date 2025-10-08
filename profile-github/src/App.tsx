@@ -2,11 +2,17 @@ import { useEffect, useState, type ReactNode } from "react";
 import { BookMarked, Github, UserRound } from 'lucide-react';
 
 export default function App() {
-  const [data, setData] = useState(null);
-  const CenterIconsLucide: string = 'flex justify-center items-center gap-2'
-  type Props = {
-    children: ReactNode
+  interface DataType {
+    avatar_url: string
+    name: string
+    login: string
+    bio: string
+    followers: number
+    public_repos: number
   }
+  const [data, setData] = useState<DataType | null>(null);
+  const CenterIconsLucide: string = 'flex justify-center items-center gap-2'
+  type Props = { children: ReactNode }
   const Main = (props: Props) => {
     return <main className="w-screen h-screen">{props.children}</main>
   }

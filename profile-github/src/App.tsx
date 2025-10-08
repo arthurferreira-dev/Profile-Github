@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { BookMarked, Github, UserRound } from 'lucide-react';
 
 export default function App() {
   const [data, setData] = useState(null);
   const CenterIconsLucide: string = 'flex justify-center items-center gap-2'
-  const Main = (props) => {
+  type Props = {
+    children: ReactNode
+  }
+  const Main = (props: Props) => {
     return <main className="w-screen h-screen">{props.children}</main>
   }
-  const DivDestaque = (props) => {
+  const DivDestaque = (props: Props) => {
     return <div className="bg-zinc-900 p-3 rounded-lg w-[300px] mt-3">{props.children}</div>
   }
-  const BtnGithub = (props) => {
+  const BtnGithub = (props: Props) => {
     return <button className={`bg-zinc-900 p-3 duration-[.42s] block mx-auto font-semibold rounded-lg mt-3 w-[165px] hover:bg-zinc-950 hover:cursor-pointer ${CenterIconsLucide}`}>{props.children}</button>
   }
 

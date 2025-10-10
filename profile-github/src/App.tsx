@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <Main>
-        <img src={data?.avatar_url} alt="Avatar Github" width="184" className="rounded-[50%] mx-auto my-3" />
+        <img src={data?.avatar_url} alt="Avatar Github" loading="lazy" width="184" className="rounded-[50%] mx-auto my-3" />
         <div className="flex justify-center items-center">
           <div>
             <h1 className="text-2xl font-mono text-center">{data?.name}</h1>

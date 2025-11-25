@@ -1,65 +1,74 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { BookMarked, Github, UserRound } from 'lucide-react';
+import { useState, useEffect } from "react";
+import type { DataType } from "./utils/props";
+import { Sun, Moon, UsersRound, BookMarked, Github } from "lucide-react";
+import { DivCard } from "./components/DivCard";
+import { BtnGithub } from "./components/BtnGithub";
 
 export default function App() {
-  interface DataType {
-    avatar_url: string
-    name: string
-    login: string
-    bio: string
-    followers: number
-    public_repos: number
-  }
   const [data, setData] = useState<DataType | null>(null);
-  const CenterIconsLucide: string = 'flex justify-center items-center gap-2'
-  type Props = { children: ReactNode }
-  const Main = (props: Props) => {
-    return <main className="w-screen h-screen">{props.children}</main>
-  }
-  const DivDestaque = (props: Props) => {
-    return <div className="bg-zinc-900 p-3 rounded-lg w-[300px] mt-3">{props.children}</div>
-  }
-  const BtnGithub = (props: Props) => {
-    return <button className={`bg-zinc-900 p-3 duration-[.42s] block mx-auto font-semibold rounded-lg mt-3 w-[165px] hover:bg-zinc-950 hover:cursor-pointer ${CenterIconsLucide}`}>{props.children}</button>
-  }
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await fetch('https://api.github.com/users/arthurferreira-dev');
+        const res = await fetch(
+          "https://api.github.com/users/arthurferreira-dev"
+        );
         const json = await res.json();
         setData(json);
       } catch (error) {
-        console.error('Não foi possível receber dados da API:', error);
+        console.error("Não foi possível receber dados da API: ", error);
       }
-    }
+    };
 
     getData();
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const toogleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "garden" : "dark"));
+  };
+
   return (
-    <Main>
-        <img src={data?.avatar_url} alt="Avatar Github" loading="lazy" width="184" className="rounded-[50%] mx-auto my-3" />
-        <div className="flex justify-center items-center">
-          <div>
-            <h1 className="text-2xl font-mono text-center">{data?.name}</h1>
-            <h2 className="text-lg text-center font-sans mb-3 font-light">{data?.login}</h2>
-            <p className="text-base font-sans w-[300px] font-medium text-justify">{data?.bio}</p>
-            <div className="flex flex-col flex-wrap">
-              <DivDestaque>
-                <p className={`text-base font-bold text-center font-sans ${CenterIconsLucide}`}><UserRound/> {data?.followers} seguidores</p>
-              </DivDestaque>
-              <DivDestaque>
-                <p className={`text-base font-semibold text-center font-sans ${CenterIconsLucide}`}>
-                  <BookMarked/> {data?.public_repos} Repositórios (Públicos)
-                </p>
-              </DivDestaque>
-              <BtnGithub>
-                <Github/> Github
-              </BtnGithub>
-            </div>
+    <div className="w-screen h-screen text-neutral-content">
+      <div className="p-2">
+        <label className="swap swap-rotate">
+          <input type="checkbox" onChange={toogleTheme} />
+
+          <Moon className="swap-off text-base-content" size={30} />
+
+          <Sun className="swap-on text-base-content" size={30} />
+        </label>
+      </div>
+      <main className="text-base-content">
+        <div className="flex flex-col flex-wrap justify-center items-center gap-3.5">
+          <div className="flex flex-col flex-wrap justify-center items-center gap-3.5">
+            <img
+              className="mask mask-circle w-60"
+              src={data?.avatar_url}
+              alt={`${data?.login} - Avatar`}
+            />
+            <h2 className="text-xl font-mono">
+              <span className="font-sans">@</span>
+              {data?.login}
+            </h2>
+          </div>
+          <div className="flex flex-col flex-wrap justify-center items-center gap-3">
+            <DivCard state={theme}>
+              <UsersRound/> <p className="font-semibold">{data?.followers} Seguidores</p>
+            </DivCard>
+            <DivCard state={theme}>
+              <BookMarked/> <p className="font-semibold">{data?.public_repos} Repositórios (Públicos)</p>
+            </DivCard>
+            <BtnGithub state={theme} url={data?.html_url ?? ""}>
+              <Github/> Github
+            </BtnGithub>
           </div>
         </div>
-    </Main>
+      </main>
+    </div>
   );
 }

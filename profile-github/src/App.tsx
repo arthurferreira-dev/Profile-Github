@@ -57,7 +57,7 @@ export default function App() {
             </h2>
           </div>
           <div className="flex flex-col flex-wrap justify-center items-center">
-           <p className="text-justify w-[165px]">
+           <p className="text-justify w-[300px]">
             {data?.bio}
            </p>
           </div>

@@ -56,6 +56,11 @@ export default function App() {
               {data?.login}
             </h2>
           </div>
+          <div className="flex flex-col flex-wrap justify-center items-center">
+           <p className="text-justify w-[165px]">
+            {data?.bio}
+           </p>
+          </div>
           <div className="flex flex-col flex-wrap justify-center items-center gap-3">
             <DivCard state={theme}>
               <UsersRound/> <p className="font-semibold">{data?.followers} Seguidores</p>
